@@ -1,0 +1,1 @@
+// Add "yscrollcommand" to the dictionary to avoid false positives from the spell checker.

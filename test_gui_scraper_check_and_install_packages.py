@@ -5,17 +5,17 @@ import unittest
 
 from gui_scraper import check_and_install_packages
 
-from unittest import mock
-
 import subprocess
 
-import tkinter.messagebox
+import importlib.util
+
+from unittest import mock
 
 import unittest.mock
 
-from unittest.mock import patch
+import tkinter.messagebox
 
-import importlib.util
+from unittest.mock import patch
 
 class TestCheckAndInstallPackages(unittest.TestCase):
 	def test_all_packages_installed(self):
@@ -23,53 +23,6 @@ class TestCheckAndInstallPackages(unittest.TestCase):
 			with unittest.mock.patch('importlib.util.find_spec', return_value=True):
 				check_and_install_packages()
 			mock_check_call.assert_not_called()
-
-class TestCheckAndInstallPackages(unittest.TestCase):
-	def test_successful_installation(self):
-		with unittest.mock.patch('subprocess.check_call') as mock_install:
-			with unittest.mock.patch('importlib.util.find_spec', side_effect=[None, True]):
-				check_and_install_packages()
-			mock_install.assert_called_once_with(['python', '-m', 'pip', 'install', 'selenium'])
-
-class TestCheckAndInstallPackages(unittest.TestCase):
-	def test_check_and_install_packages_installs_missing_packages(self):
-		with unittest.mock.patch('subprocess.check_call') as mock_install:
-			with unittest.mock.patch('tkinter.messagebox.showinfo') as mock_messagebox:
-				mock_install.return_value = None
-				check_and_install_packages()
-				mock_messagebox.assert_called_once_with(
-					'Installation', 'The following packages were installed: selenium, tkinter')
-
-class TestCheckAndInstallPackages(unittest.TestCase):
-	def test_no_error_message_on_successful_installation(self):
-		with unittest.mock.patch('subprocess.check_call') as mock_install:
-			with unittest.mock.patch('tkinter.messagebox.showinfo') as mock_showinfo:
-				mock_install.return_value = None
-				check_and_install_packages()
-				mock_showinfo.assert_called_with('Installation', 'All required packages are already installed.')
-
-class TestCheckAndInstallPackages(unittest.TestCase):
-	def test_all_packages_installed(self):
-		with unittest.mock.patch('subprocess.check_call') as mock_install:
-			with unittest.mock.patch('tkinter.messagebox.showinfo') as mock_messagebox:
-				check_and_install_packages()
-			mock_messagebox.assert_called_once_with('Installation', 'All required packages are already installed.')
-			mock_install.assert_not_called()
-
-class TestCheckAndInstallPackages(unittest.TestCase):
-	@patch('subprocess.check_call')
-	@patch('importlib.util.find_spec')
-	def test_check_and_install_packages(self, mock_find_spec, mock_check_call):
-		mock_find_spec.side_effect = [None, None]
-		check_and_install_packages()
-		mock_check_call.assert_called_once_with(['python', '-m', 'pip', 'install', 'selenium', 'tkinter'])
-
-class TestCheckAndInstallPackages(unittest.TestCase):
-	def test_all_packages_installed(self):
-		with unittest.mock.patch('importlib.util.find_spec', return_value=True):
-			with unittest.mock.patch('tkinter.messagebox.showinfo') as mock_showinfo:
-				check_and_install_packages()
-			mock_showinfo.assert_called_once_with('Installation', 'All required packages are already installed.')
 
 class TestCheckAndInstallPackages(unittest.TestCase):
 	def test_install_missing_packages(self):
